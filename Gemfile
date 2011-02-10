@@ -16,6 +16,8 @@ group :test do
   gem 'webrat', '0.7.1'
 end
 
+gem 'ZenTest'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
