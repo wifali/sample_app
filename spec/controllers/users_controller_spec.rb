@@ -38,6 +38,7 @@ describe UsersController do
   end
 
   describe "GET 'new'" do
+    
     it "should be successful" do
       get :new
       response.should be_success
@@ -88,6 +89,11 @@ describe UsersController do
       before(:each) do
         @attr = {:name => "New User", :email => "user@example.com", :password => "foobar",
             :password_confirmation => "foobar"}
+      end
+      
+      it "should sign the user in" do
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
       
       it "should create a user" do
