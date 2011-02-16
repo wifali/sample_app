@@ -5,9 +5,15 @@ class UsersController < ApplicationController
   before_filter :admin_user,   :only => :destroy
   
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
-    redirect_to users_path
+    victim = User.find(params[:id])
+    if victim == current_user
+      flash[:notice] = "You can't just quit. Haven't you read the terms?"
+      redirect_to users_path
+    else
+      victim.destroy
+      flash[:success] = "User destroyed."
+      redirect_to users_path
+    end
   end
   
   def index
