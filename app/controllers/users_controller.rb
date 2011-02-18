@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def destroy
     victim = User.find(params[:id])
     if victim == current_user
-      flash[:notice] = "You can't just quit. Haven't you read the terms?"
+      flash[:error] = "You can't just quit. Haven't you read the terms?"
       redirect_to users_path
     else
       victim.destroy
@@ -24,6 +24,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @title = @user.name
+    @microposts = @user.microposts.paginate(:page => params[:page])
   end
   
   def new
@@ -35,8 +36,8 @@ class UsersController < ApplicationController
       @title = "Sign up"
     end
   end
-  
- def create
+    
+  def create
    @user = User.new(params[:user])
    if @user.save
      sign_in @user
